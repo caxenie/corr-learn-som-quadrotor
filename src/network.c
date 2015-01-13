@@ -4,7 +4,7 @@
 population init_population(short idx, int psize)
 {
 	population p;
-	double sigma_def = 4.5000f;
+	double sigma_def = 0.045000f;
 	double sumWcross = 0.0f;
 
 	p.id = idx;
