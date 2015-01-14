@@ -1,16 +1,12 @@
 #include "data.h"
 
 /* read input data from file and populate struct */
-indata* read_input_data(int np, int psz, FILE* f, int pkid)
+indata* read_input_data(int np, int psz, FILE* f)
 {
 	int data_pts = 0;	
 	indata *id = (indata*)calloc(1, sizeof(indata));	
 	double *rel_var;
 	double *base_var; 	
-	static fpos_t fpos;
-
-	/* set position to current pack */	
-	if(pkid!=0) fsetpos(f, &fpos);
 
 	/* get the number of data points */
 	fread(&data_pts, sizeof(int), 1, f);	
@@ -31,16 +27,10 @@ indata* read_input_data(int np, int psz, FILE* f, int pkid)
 	for(int didx = 0; didx < id->len; didx++){
 		fread(&(base_var[didx]), sizeof(double), 1, f);
 	}				
-
-	/* get the number of data points */
-	fread(&data_pts, sizeof(int), 1, f);	
 	
 	for(int didx = 0; didx < id->len; didx++){
 		fread(&(rel_var[didx]), sizeof(double), 1, f);
 	}	
-
-	/* get current position after reading the current pack */
-	fgetpos(f, &fpos);	
 
 	for(int i = 0;i<id->len;i++){
        		for(int j = 0;j<id->npop;j++){

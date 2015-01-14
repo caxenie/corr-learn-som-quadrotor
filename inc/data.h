@@ -9,7 +9,4 @@ typedef struct{
 }indata;
 
 /* generate input data and populate struct */
-indata* read_input_data(int np, int psz, FILE* f, int id);
-
-
-
+indata* read_input_data(int np, int psz, FILE* f);
