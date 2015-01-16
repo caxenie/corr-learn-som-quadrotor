@@ -28,6 +28,11 @@ indata* read_input_data(int np, int psz, FILE* f)
 		fread(&(base_var[didx]), sizeof(double), 1, f);
 	}				
 	
+	/* get the number of data points for the second dataset */
+	fread(&data_pts, sizeof(int), 1, f);
+
+	id->len = data_pts;	
+	
 	for(int didx = 0; didx < id->len; didx++){
 		fread(&(rel_var[didx]), sizeof(double), 1, f);
 	}	

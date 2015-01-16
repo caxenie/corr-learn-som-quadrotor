@@ -24,23 +24,27 @@ yaw1     = -ld.rb.yaw;
 T1       = ld.imu.hrt.t;
 
 % interpolate data to imu hrt timeline
-troll1    = interp1(t1,  roll1,     ld.imu.hrt.t);
-tpitch1   = interp1(t1,  pitch1,    ld.imu.hrt.t);
-troll1(isnan(troll1)) = 0.0;
-tpitch1(isnan(tpitch1)) = 0.0;
+troll1    = fix_singularities(interp1(t1,  roll1,     ld.imu.hrt.t));
+tpitch1   = fix_singularities(interp1(t1,  pitch1,    ld.imu.hrt.t));
 
 % % ACCELEROMETER
 figure; 
 mfa = 50;
-subplot(3,2,1); plot(ld.acc.rot.roll_lrn, -(mfa*sort(ld.acc.a_rot_f(2,:)./(- ld.g))),'.g'); 
+subplot(3,2,1); 
+inf_roll = fix_singularities(-(mfa*sort(ld.acc.a_rot_f(2,:)./(- ld.g))));
+plot(inf_roll, ld.acc.rot.roll_lrn,'.g'); 
+
 subplot(3,2,3); plot(T1, (troll1)); hold on; plot(T1, (ld.acc.rot.roll)); 
 subplot(3,2,5); plot(sort(troll1),sort(ld.acc.rot.roll)); 
-subplot(3,2,2); plot(ld.acc.rot.pitch_lrn, (mfa*sort(ld.acc.a_rot_f(1,:)./(- ld.g))),'.b');
+
+subplot(3,2,2); 
+inf_pitch = fix_singularities(mfa*sort(ld.acc.a_rot_f(1,:)./(- ld.g)));
+plot(inf_pitch, ld.acc.rot.pitch_lrn,'.b');
+
 subplot(3,2,4); plot(T1, (tpitch1)); hold on; plot(T1, (ld.acc.rot.pitch)); 
 subplot(3,2,6); plot(sort(tpitch1),sort(ld.acc.rot.pitch)); 
 
-%  MAGNETOMETER
-
+% %  MAGNETOMETER
 %TRACKER WITH REFS FOR MAGNETO (GT)
 t2       = ld.rb.hrt.t;
 roll2    = ld.rb.roll;
@@ -49,136 +53,148 @@ yaw2     = -ld.rb.yaw;
 T2       = ld.imu.hrt.t;
 
 % interpolate data to imu hrt timeline
-troll2    = interp1(t2,  roll2,     ld.imu.hrt.t);
-tpitch2   = interp1(t2,  pitch2,    ld.imu.hrt.t);
-tyaw2     = interp1(t2,  yaw2,      ld.imu.hrt.t);
-
-troll2(isnan(troll2)) = 0.0;
-tpitch2(isnan(tpitch2)) = 0.0;
-tyaw2(isnan(tyaw2)) = 0.0;
+troll2    = fix_singularities(interp1(t2,  roll2,     ld.imu.hrt.t));
+tpitch2   = fix_singularities(interp1(t2,  pitch2,    ld.imu.hrt.t));
+tyaw2     = fix_singularities(interp1(t2,  yaw2,      ld.imu.hrt.t));
 
 figure; 
 mfm = 0.01;
-subplot(3,1,1); plot(ld.mag.yaw_lrn, (mfm*sort(ld.mag.b_hat(2,:)./ld.mag.b_hat(1,:))),'.m'); 
+subplot(3,1,1); 
+inf_yaw = fix_singularities(mfm*sort(ld.mag.b_hat(2,:)./ld.mag.b_hat(1,:)));
+plot(inf_yaw, ld.mag.yaw_lrn,'.m'); 
 subplot(3,1,2); plot(T2, (tyaw2)); hold on; plot(T2, (ld.mag.yaw_off - ld.mag.yaw)); 
 subplot(3,1,3); plot(sort(tyaw2),sort(ld.mag.yaw_off - ld.mag.yaw)); 
 
-% collect data to dump in a different structure 
-% tracker (ground truth)
+% % COLLECT DATA TO DUMP 
+% tracker (ground truth) for acc ref frame
 ddump.gt.roll1 = (troll1); ddump.gt.roll1 = normalize_var(sort(ddump.gt.roll1));
 ddump.gt.pitch1 = (tpitch1); ddump.gt.pitch1 = normalize_var(sort(ddump.gt.pitch1));
 ddump.gt.t1   = T1;
 
-ddump.gt.roll2 = (troll2);  ddump.gt.roll2 = normalize_var(sort(ddump.gt.roll2));
+% tracker (ground truth) for mag ref frame
+ddump.gt.roll2 = (troll2); 
+ddump.gt.roll2 = normalize_var(sort(ddump.gt.roll2));
 ddump.gt.pitch2 = (tpitch2); ddump.gt.pitch2 = normalize_var(sort(ddump.gt.pitch2));
 ddump.gt.yaw2 = (tyaw2); ddump.gt.yaw2 = normalize_var(sort(ddump.gt.yaw2));
 ddump.gt.t2   = T2;
+% 
 % accelerometer 
-ddump.acc.roll.disp = (sort(ld.acc.rot.roll)); ddump.acc.roll.disp(isnan(ddump.acc.roll.disp)) = 0;
-ddump.acc.roll.disp = normalize_var(ddump.acc.roll.disp);
-ddump.acc.roll.lrn = sort(ld.acc.rot.roll_lrn); ddump.acc.roll.lrn(isnan(ddump.acc.roll.lrn)) = 0;
-ddump.acc.roll.lrn = normalize_var(ddump.acc.roll.lrn);
-ddump.acc.roll.inf = -(mfa*sort(ld.acc.a_rot_f(2,:)./(- ld.g))); ddump.acc.roll.inf(isnan(ddump.acc.roll.inf)) = 0;
-ddump.acc.roll.inf= normalize_var(ddump.acc.roll.inf);
-ddump.acc.pitch.disp = sort(ld.acc.rot.pitch); ddump.acc.pitch.disp(isnan(ddump.acc.pitch.disp)) = 0;
-ddump.acc.pitch.disp = normalize_var(ddump.acc.pitch.disp);
-ddump.acc.pitch.lrn = sort(ld.acc.rot.pitch_lrn); ddump.acc.pitch.lrn(isnan(ddump.acc.pitch.lrn)) = 0;
-ddump.acc.pitch.lrn= normalize_var(ddump.acc.pitch.lrn);
-ddump.acc.pitch.inf = (mfa*sort(ld.acc.a_rot_f(1,:)./(- ld.g)));  ddump.acc.pitch.inf(isnan(ddump.acc.pitch.inf)) = 0;
-ddump.acc.pitch.inf = normalize_var(ddump.acc.pitch.inf);
-% magneto
-ddump.mag.yaw.disp = sort(ld.mag.yaw_off - ld.mag.yaw); ddump.mag.yaw.disp(isnan(ddump.mag.yaw.disp))=0;
-ddump.mag.yaw.disp = normalize_var(ddump.mag.yaw.disp);
-ddump.mag.yaw.lrn  = sort(ld.mag.yaw_lrn); ddump.mag.yaw.lrn(isnan(ddump.mag.yaw.lrn)) = 0;
-ddump.mag.yaw.lrn = normalize_var(ddump.mag.yaw.lrn);
-ddump.mag.bfield = (mfm*sort(ld.mag.b_hat(2,:)./ld.mag.b_hat(1,:)));  ddump.mag.bfield(isnan(ddump.mag.bfield)) = 0;
-ddump.mag.bfield = normalize_var(ddump.mag.bfield);
+% roll
+ddump.acc.roll.disp = normalize_var((ld.acc.rot.roll)); 
+ddump.acc.roll.lrn = normalize_var(ld.acc.rot.roll_lrn); 
+ddump.acc.roll.inf = normalize_var(inf_roll);
+%pitch
+ddump.acc.pitch.disp = normalize_var(ld.acc.rot.pitch); 
+ddump.acc.pitch.lrn = normalize_var(ld.acc.rot.pitch_lrn); 
+ddump.acc.pitch.inf = normalize_var(inf_pitch);
 
-% dump in a binary file 
-data_dump = fopen('quad_data_raw.dat','wb');
+% % magneto
+% yaw 
+ddump.mag.yaw.disp = normalize_var(fix_singularities(ld.mag.yaw_off - ld.mag.yaw));
+ddump.mag.yaw.lrn  = normalize_var(fix_singularities(ld.mag.yaw_lrn)); 
+ddump.mag.bfield   = normalize_var(inf_yaw); 
+
+% ----------------------------------------------------
+% DUMP FILE ON DISK
+data_dump = fopen('quad_data_raw_roll_tf.dat','wb');
 
 data_pts = length(ddump.acc.roll.lrn);
-fwrite(data_dump, data_pts, 'int');
-for id = 1:length(ddump.acc.roll.lrn)
-   fwrite(data_dump, ddump.acc.roll.lrn(id), 'double'); 
-end
+ddump.acc.roll.lrn = interp(ddump.acc.roll.lrn, 2);
+ddump.acc.roll.inf = interp(ddump.acc.roll.inf, 2);
 
-data_pts = length(ddump.acc.roll.lrn);
 fwrite(data_dump, data_pts, 'int');
 for id = 1:length(ddump.acc.roll.lrn)
    fwrite(data_dump, ddump.acc.roll.inf(id), 'double'); 
 end
 
-% ----------------------------------------------------
+ddump.acc.roll.lrn = interp(ddump.acc.roll.lrn, 2);
 
-data_pts = length(ddump.gt.t1);
 fwrite(data_dump, data_pts, 'int');
-for id = 1:length(ddump.gt.t1)
-   fwrite(data_dump, ddump.gt.roll1(id), 'double'); 
-end
-
-data_pts = length(ddump.gt.t1);
-fwrite(data_dump, data_pts, 'int');
-for id = 1:length(ddump.gt.t1)
-   fwrite(data_dump, ddump.acc.roll.disp(id), 'double'); 
-end
-
-%-----------------------------------------------------
-
-data_pts = length(ddump.acc.pitch.lrn);
-fwrite(data_dump, data_pts, 'int');
-for id = 1:length(ddump.acc.pitch.lrn)
-   fwrite(data_dump, ddump.acc.pitch.lrn(id), 'double'); 
-end
-
-data_pts = length(ddump.acc.pitch.lrn);
-fwrite(data_dump, data_pts, 'int');
-for id = 1:length(ddump.acc.pitch.lrn)
-   fwrite(data_dump, ddump.acc.pitch.inf(id), 'double'); 
-end
-
-%----------------------------------------------------
-
-data_pts = length(ddump.gt.t1);
-fwrite(data_dump, data_pts, 'int');
-for id = 1:length(ddump.gt.t1)
-   fwrite(data_dump, ddump.gt.pitch1(id), 'double'); 
-end
-
-data_pts = length(ddump.gt.t1);
-fwrite(data_dump, data_pts, 'int');
-for id = 1:length(ddump.gt.t1)
-   fwrite(data_dump, ddump.acc.pitch.disp(id), 'double'); 
-end
-%----------------------------------------------------
-
-data_pts = length(ddump.mag.yaw.lrn);
-fwrite(data_dump, data_pts, 'int');
-for id = 1:length(ddump.mag.yaw.lrn)
-   fwrite(data_dump, ddump.mag.yaw.lrn(id), 'double'); 
-end
-
-data_pts = length(ddump.mag.yaw.lrn);
-fwrite(data_dump, data_pts, 'int');
-for id = 1:length(ddump.mag.yaw.lrn)
-   fwrite(data_dump, ddump.mag.bfield(id), 'double'); 
-end
-
-%-----------------------------------------------------
-
-data_pts = length(ddump.gt.t2);
-fwrite(data_dump, data_pts, 'int');
-for id = 1:length(ddump.gt.t2)
-   fwrite(data_dump, ddump.gt.yaw2(id), 'double'); 
-end
-
-data_pts = length(ddump.gt.t2);
-fwrite(data_dump, data_pts, 'int');
-for id = 1:length(ddump.gt.t2)
-   fwrite(data_dump, ddump.mag.yaw.disp(id), 'double'); 
+for id = 1:length(ddump.acc.roll.lrn)
+   fwrite(data_dump, ddump.acc.roll.lrn(id), 'double'); 
 end
 
 fclose(data_dump);
+% ----------------------------------------------------
+
+% data_dump = fopen('quad_data_raw_roll_eval','wb');
+% data_pts = length(ddump.gt.t1);
+% fwrite(data_dump, data_pts, 'int');
+% for id = 1:length(ddump.gt.t1)
+%    fwrite(data_dump, ddump.gt.roll1(id), 'double'); 
+% end
+% 
+% data_pts = length(ddump.gt.t1);
+% fwrite(data_dump, data_pts, 'int');
+% for id = 1:length(ddump.gt.t1)
+%    fwrite(data_dump, ddump.acc.roll.disp(id), 'double'); 
+% end
+% fclose(data_dump);
+
+%-----------------------------------------------------
+
+% data_dump = fopen('quad_data_raw_pitch_tf','wb');
+% data_pts = length(ddump.acc.pitch.lrn);
+% fwrite(data_dump, data_pts, 'int');
+% for id = 1:length(ddump.acc.pitch.lrn)
+%    fwrite(data_dump, ddump.acc.pitch.inf(id), 'double'); 
+% end
+% 
+% data_pts = length(ddump.acc.pitch.lrn);
+% fwrite(data_dump, data_pts, 'int');
+% for id = 1:length(ddump.acc.pitch.lrn)
+%    fwrite(data_dump, ddump.acc.pitch.lrn(id), 'double'); 
+% end
+% fclose(data_dump);
+
+%----------------------------------------------------
+
+% data_dump = fopen('quad_data_raw_pitch_eval','wb');
+% data_pts = length(ddump.gt.t1);
+% fwrite(data_dump, data_pts, 'int');
+% for id = 1:length(ddump.gt.t1)
+%    fwrite(data_dump, ddump.gt.pitch1(id), 'double'); 
+% end
+% 
+% data_pts = length(ddump.gt.t1);
+% fwrite(data_dump, data_pts, 'int');
+% for id = 1:length(ddump.gt.t1)
+%    fwrite(data_dump, ddump.acc.pitch.disp(id), 'double'); 
+% end
+% fclose(data_dump);
+
+% %----------------------------------------------------
+
+% data_dump = fopen('quad_data_raw_yaw_tf','wb');
+% data_pts = length(ddump.mag.yaw.lrn);
+% fwrite(data_dump, data_pts, 'int');
+% for id = 1:length(ddump.mag.yaw.lrn)
+%    fwrite(data_dump, ddump.mag.bfield(id), 'double'); 
+% end
+% 
+% data_pts = length(ddump.mag.yaw.lrn);
+% fwrite(data_dump, data_pts, 'int');
+% for id = 1:length(ddump.mag.yaw.lrn)
+%    fwrite(data_dump, ddump.mag.yaw.lrn(id), 'double'); 
+% end
+% fclose(data_dump);
+
+% % %-----------------------------------------------------
+
+% data_dump = fopen('quad_data_raw_yaw_eval','wb');
+% data_pts = length(ddump.gt.t2);
+% fwrite(data_dump, data_pts, 'int');
+% for id = 1:length(ddump.gt.t2)
+%    fwrite(data_dump, ddump.gt.yaw2(id), 'double'); 
+% end
+% 
+% data_pts = length(ddump.gt.t2);
+% fwrite(data_dump, data_pts, 'int');
+% for id = 1:length(ddump.gt.t2)
+%    fwrite(data_dump, ddump.mag.yaw.disp(id), 'double'); 
+% end
+% fclose(data_dump);
+
 %----------------------------------------------------
 
 %%
@@ -252,17 +268,11 @@ fclose(data_dump);
 % figure
 % plot_KF_roll(ld);
 
-
-
 % figure
 % plot_time_analysis(ld);
 
-
-
 % figure
 % plot_roll_spectrogram(ld);
-
-
 
 % figure
 % plot(ld.imu.hrt.t,ld.imu.xgyro)
