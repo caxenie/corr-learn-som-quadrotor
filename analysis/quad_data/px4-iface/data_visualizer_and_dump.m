@@ -62,8 +62,10 @@ mfm = 0.01;
 subplot(3,1,1); 
 inf_yaw = fix_singularities(mfm*sort(ld.mag.b_hat(2,:)./ld.mag.b_hat(1,:)));
 plot(inf_yaw, ld.mag.yaw_lrn,'.m'); 
-subplot(3,1,2); plot(T2, (tyaw2)); hold on; plot(T2, (ld.mag.yaw_off - ld.mag.yaw)); 
-subplot(3,1,3); plot(sort(tyaw2),sort(ld.mag.yaw_off - ld.mag.yaw)); 
+subplot(3,1,2); 
+mag_aligned = (ld.mag.yaw_off - ld.mag.yaw); mag_aligned(mag_aligned>1) = 0.0;
+plot(T2, (tyaw2)); hold on; plot(T2, mag_aligned); 
+subplot(3,1,3); plot(sort(tyaw2),sort(mag_aligned)); 
 
 % % COLLECT DATA TO DUMP 
 % tracker (ground truth) for acc ref frame
@@ -90,9 +92,9 @@ ddump.acc.pitch.inf = normalize_var(inf_pitch);
 
 % % magneto
 % yaw 
-ddump.mag.yaw.disp = normalize_var(fix_singularities(ld.mag.yaw_off - ld.mag.yaw));
-ddump.mag.yaw.lrn  = normalize_var(fix_singularities(ld.mag.yaw_lrn)); 
-ddump.mag.bfield   = normalize_var(inf_yaw); 
+ddump.mag.yaw.disp = normalize_var(fix_singularities(mag_aligned));
+ddump.mag.yaw.lrn  = normalize_var(fix_singularities(ld.mag.yaw_off + ld.mag.yaw_lrn)); 
+ddump.mag.bfield   = normalize_var(ld.mag.yaw_off + inf_yaw); 
 
 % ----------------------------------------------------
 % % DUMP FILE ON DISK
@@ -122,6 +124,8 @@ fclose(data_dump);
 
 data_dump = fopen('quad_data_raw_roll_eval.dat','wb');
 data_pts = length(ddump.gt.t1);
+ddump.gt.roll1=sort(ddump.gt.roll1);
+ddump.acc.roll.disp = sort(ddump.acc.roll.disp);
 fwrite(data_dump, data_pts, 'int');
 for id = 1:length(ddump.gt.t1)
    fwrite(data_dump, ddump.gt.roll1(id), 'double'); 
@@ -154,6 +158,8 @@ fclose(data_dump);
 
 data_dump = fopen('quad_data_raw_pitch_eval.dat','wb');
 data_pts = length(ddump.gt.t1);
+ddump.gt.pitch1 = sort(ddump.gt.pitch1);
+ddump.acc.pitch.disp = sort(ddump.acc.pitch.disp);
 fwrite(data_dump, data_pts, 'int');
 for id = 1:length(ddump.gt.t1)
    fwrite(data_dump, ddump.gt.pitch1(id), 'double'); 
@@ -186,6 +192,8 @@ fclose(data_dump);
 
 data_dump = fopen('quad_data_raw_yaw_eval.dat','wb');
 data_pts = length(ddump.gt.t2);
+ddump.gt.yaw2 = sort(ddump.gt.yaw2);
+ddump.mag.yaw.disp = sort(ddump.mag.yaw.disp);
 fwrite(data_dump, data_pts, 'int');
 for id = 1:length(ddump.gt.t2)
    fwrite(data_dump, ddump.gt.yaw2(id), 'double'); 

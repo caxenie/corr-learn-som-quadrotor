@@ -49,8 +49,7 @@ ld.mag.yaw      = atan2(by, bx);
 
 % data for learning 
 mf = 0.01;
-ld.mag.yaw_lrn  = atan(mf*sort(by./ bx));
-ld.mag.yaw_lrn(isnan(ld.mag.yaw_lrn)) = 0;
+ld.mag.yaw_lrn  = fix_singularities(atan(mf*sort(by./ bx)));
 
 ld.mag.yaw_off  = mean(ld.mag.yaw(1:100));
 
