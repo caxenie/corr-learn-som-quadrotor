@@ -59,6 +59,10 @@ outdata* run_simulation(indata *in, simulation *s)
 		sol_idx ++;
 	}while(shuffle_pops_ids(base_idx, s->n->nsize, pre_post_pair));
 
+	/* shuffle input data */
+	for(int pidx = 0; pidx < s->n->nsize; pidx++)
+		shuffle_input_data(in->data[pidx], in->len);
+
 	/* correlation learning loop */
         for(int tidx = s->t0; tidx<s->tf_lrn_cross; tidx++){	
 		if(tidx<s->tf_lrn_in){
@@ -70,7 +74,7 @@ outdata* run_simulation(indata *in, simulation *s)
 					win_act = 0.0f;
 					win_idx = 0.0f;
 					hwi = (double*)calloc(s->n->pops[0].size, sizeof(double));
-					insample = in->data[didx][pidx];
+					insample = in->data[pidx][didx];
 					cur_act = (double*)calloc(s->n->pops[0].size, sizeof(double));
 					/* loop through neurons in current population */
 					for(int nidx = 0; nidx<s->n->pops[pidx].size;nidx++){
@@ -127,7 +131,7 @@ outdata* run_simulation(indata *in, simulation *s)
                                 for(int pidx = 0; pidx < s->n->nsize; pidx++){
                                         tot_act = 0.0f;
 					cur_act = (double*)calloc(s->n->pops[0].size, sizeof(double));
-                                        insample = in->data[didx][pidx];
+                                        insample = in->data[pidx][didx];
                                         /* loop through neurons in current population */
                                         for(int nidx = 0; nidx<s->n->pops[pidx].size;nidx++){
                                                 /* compute sensory elicited activation */
@@ -252,7 +256,7 @@ outdata* test_inference(outdata* learning_runtime)
 		      cur_act = (double*)calloc(learning_runtime->sim->n->pops[pre_pop].size, sizeof(double));
 		      sum_spref_act = 0.0f;
 		      sum_act = 0.0f;
-                      insample = learning_runtime->in->data[didx][pre_pop];
+                      insample = learning_runtime->in->data[pre_pop][didx];
                       /* loop through neurons in current population */
                       for(int nidx = 0; nidx<learning_runtime->sim->n->pops[pre_pop].size;nidx++){
                               /* compute sensory elicited activation */
@@ -443,8 +447,8 @@ char* dump_runtime_data_extended(outdata *od, int format)
 	fwrite(&(od->in->npop), sizeof(int), 1, fout);
 	fwrite(&(od->in->popsize), sizeof(int), 1, fout);
 	fwrite(&(od->in->len), sizeof(int), 1, fout);
-	for(int i=0;i<od->in->len;i++){
-		for(int j=0;j<od->in->npop;j++){
+	for(int i=0;i<od->in->npop;i++){
+		for(int j=0;j<od->in->len;j++){
 			fwrite(&(od->in->data[i][j]), sizeof(double), 1, fout);	
 		}
 	}

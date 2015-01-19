@@ -28,7 +28,7 @@ for pidx = 1:rdata.sim.net.nsize
     ylabel(sprintf('Winput - pop %d', pidx));
     grid off; box off; title(sprintf('Input weight vector, adapt %d epochs', rdata.sim.tf_lrn_in));
     subplot(3, 1, 2);
-    imagesc((rdata.sim.net.pops(pidx).Wcross), [0, 1]); box off; colorbar;
+    imagesc(rot90(rdata.sim.net.pops(pidx).Wcross), [0, 1]); box off; colorbar;
     xlabel('cross learning epochs'); ylabel(sprintf('Wcross - pop %d', pidx));
     grid off; box off; title(sprintf('Cross weight vector, adapt %d epochs', rdata.sim.tf_lrn_cross));
     subplot(3, 1, 3);
@@ -41,7 +41,7 @@ end
 RANGE = 1;
 for vpidx =2:rdata.sim.net.nsize
     figure; set(gcf, 'color', 'white');
-    plot(rdata.sim.indata.data(:, 1), rdata.sim.indata.data(:, vpidx), '.k'); xlabel('samples');
+    plot((rdata.sim.indata.data(1, :)), (rdata.sim.indata.data(vpidx, :)), '.k'); xlabel('samples');
     grid off; box off; title(sprintf('Input relation population 1 - population %d', vpidx));
 end
 % individual map analysis
@@ -49,10 +49,10 @@ for ppidx = 1:rdata.sim.indata.npop
     figure;
     set(gcf, 'color', 'white');
     subplot(4, 1, 1);
-    plot(rdata.sim.indata.data(:, ppidx), sprintf('.%s',idcolor(ppidx))); xlabel('samples');
+    plot(rdata.sim.indata.data(ppidx, :), sprintf('.%s',idcolor(ppidx))); xlabel('samples');
     grid off; box off; title(sprintf('Input data - pop %d', ppidx));
     subplot(4, 1, 2);
-    hist(rdata.sim.indata.data(:, ppidx), 50);
+    hist(rdata.sim.indata.data(ppidx, :), 50);
     grid off; box off; title(sprintf('Input data distribution - pop %d', ppidx));
     hndl = subplot(4, 1, 3);
     % compute the tuning curve of the current neuron in the population
@@ -65,7 +65,7 @@ for ppidx = 1:rdata.sim.indata.npop
         fx = exp(-(x - v_pref).^2/(2*rdata.sim.net.pops(ppidx).s(idx)^2));
         plot(1:rdata.sim.indata.popsize, fx, 'LineWidth', 3); hold all;
     end
-    rdata.sim.net.pops(ppidx).Winput = sort(rdata.sim.net.pops(ppidx).Winput); box off;
+    % rdata.sim.net.pops(ppidx).Winput = sort(rdata.sim.net.pops(ppidx).Winput); box off;
     ax1_pos = get(hndl, 'Position'); set(hndl, 'XTick', []); set(hndl, 'XColor','w');
     ax2 = axes('Position',ax1_pos,'XAxisLocation','bottom','Color','none','LineWidth', 3);
     set(hndl, 'YTick', []); set(hndl, 'YColor','w');

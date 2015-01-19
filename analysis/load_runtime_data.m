@@ -37,9 +37,9 @@ end
 runtime_struct.sim.indata.npop = fread(fid, 1, 'int');
 runtime_struct.sim.indata.popsize = fread(fid, 1, 'int');
 runtime_struct.sim.indata.len = fread(fid, 1, 'int');
-for lidx = 1:runtime_struct.sim.indata.len
-    for pidx = 1:runtime_struct.sim.indata.npop
-        runtime_struct.sim.indata.data(lidx, pidx) = fread(fid, 1, 'double');
+for pidx = 1:runtime_struct.sim.indata.npop
+    for lidx = 1:runtime_struct.sim.indata.len
+        runtime_struct.sim.indata.data(pidx, lidx) = fread(fid, 1, 'double');
     end
 end
 % close the file

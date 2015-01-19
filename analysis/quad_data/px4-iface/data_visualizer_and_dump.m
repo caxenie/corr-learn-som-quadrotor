@@ -95,19 +95,22 @@ ddump.mag.yaw.lrn  = normalize_var(fix_singularities(ld.mag.yaw_lrn));
 ddump.mag.bfield   = normalize_var(inf_yaw); 
 
 % ----------------------------------------------------
-% DUMP FILE ON DISK
+% % DUMP FILE ON DISK
 data_dump = fopen('quad_data_raw_roll_tf.dat','wb');
 
 data_pts = length(ddump.acc.roll.lrn);
-ddump.acc.roll.lrn = interp(ddump.acc.roll.lrn, 2);
-ddump.acc.roll.inf = interp(ddump.acc.roll.inf, 2);
+
+% resampling for more accuracy
+% ddump.acc.roll.lrn = interp(ddump.acc.roll.lrn, 2);
+% ddump.acc.roll.inf = interp(ddump.acc.roll.inf, 2);
 
 fwrite(data_dump, data_pts, 'int');
 for id = 1:length(ddump.acc.roll.lrn)
    fwrite(data_dump, ddump.acc.roll.inf(id), 'double'); 
 end
 
-ddump.acc.roll.lrn = interp(ddump.acc.roll.lrn, 2);
+% resampling for more accuracy
+% ddump.acc.roll.lrn = interp(ddump.acc.roll.lrn, 2);
 
 fwrite(data_dump, data_pts, 'int');
 for id = 1:length(ddump.acc.roll.lrn)
@@ -117,83 +120,83 @@ end
 fclose(data_dump);
 % ----------------------------------------------------
 
-% data_dump = fopen('quad_data_raw_roll_eval','wb');
-% data_pts = length(ddump.gt.t1);
-% fwrite(data_dump, data_pts, 'int');
-% for id = 1:length(ddump.gt.t1)
-%    fwrite(data_dump, ddump.gt.roll1(id), 'double'); 
-% end
-% 
-% data_pts = length(ddump.gt.t1);
-% fwrite(data_dump, data_pts, 'int');
-% for id = 1:length(ddump.gt.t1)
-%    fwrite(data_dump, ddump.acc.roll.disp(id), 'double'); 
-% end
-% fclose(data_dump);
+data_dump = fopen('quad_data_raw_roll_eval.dat','wb');
+data_pts = length(ddump.gt.t1);
+fwrite(data_dump, data_pts, 'int');
+for id = 1:length(ddump.gt.t1)
+   fwrite(data_dump, ddump.gt.roll1(id), 'double'); 
+end
+
+data_pts = length(ddump.gt.t1);
+fwrite(data_dump, data_pts, 'int');
+for id = 1:length(ddump.gt.t1)
+   fwrite(data_dump, ddump.acc.roll.disp(id), 'double'); 
+end
+fclose(data_dump);
 
 %-----------------------------------------------------
 
-% data_dump = fopen('quad_data_raw_pitch_tf','wb');
-% data_pts = length(ddump.acc.pitch.lrn);
-% fwrite(data_dump, data_pts, 'int');
-% for id = 1:length(ddump.acc.pitch.lrn)
-%    fwrite(data_dump, ddump.acc.pitch.inf(id), 'double'); 
-% end
-% 
-% data_pts = length(ddump.acc.pitch.lrn);
-% fwrite(data_dump, data_pts, 'int');
-% for id = 1:length(ddump.acc.pitch.lrn)
-%    fwrite(data_dump, ddump.acc.pitch.lrn(id), 'double'); 
-% end
-% fclose(data_dump);
+data_dump = fopen('quad_data_raw_pitch_tf.dat','wb');
+data_pts = length(ddump.acc.pitch.lrn);
+fwrite(data_dump, data_pts, 'int');
+for id = 1:length(ddump.acc.pitch.lrn)
+   fwrite(data_dump, ddump.acc.pitch.inf(id), 'double'); 
+end
+
+data_pts = length(ddump.acc.pitch.lrn);
+fwrite(data_dump, data_pts, 'int');
+for id = 1:length(ddump.acc.pitch.lrn)
+   fwrite(data_dump, ddump.acc.pitch.lrn(id), 'double'); 
+end
+fclose(data_dump);
 
 %----------------------------------------------------
 
-% data_dump = fopen('quad_data_raw_pitch_eval','wb');
-% data_pts = length(ddump.gt.t1);
-% fwrite(data_dump, data_pts, 'int');
-% for id = 1:length(ddump.gt.t1)
-%    fwrite(data_dump, ddump.gt.pitch1(id), 'double'); 
-% end
-% 
-% data_pts = length(ddump.gt.t1);
-% fwrite(data_dump, data_pts, 'int');
-% for id = 1:length(ddump.gt.t1)
-%    fwrite(data_dump, ddump.acc.pitch.disp(id), 'double'); 
-% end
-% fclose(data_dump);
+data_dump = fopen('quad_data_raw_pitch_eval.dat','wb');
+data_pts = length(ddump.gt.t1);
+fwrite(data_dump, data_pts, 'int');
+for id = 1:length(ddump.gt.t1)
+   fwrite(data_dump, ddump.gt.pitch1(id), 'double'); 
+end
+
+data_pts = length(ddump.gt.t1);
+fwrite(data_dump, data_pts, 'int');
+for id = 1:length(ddump.gt.t1)
+   fwrite(data_dump, ddump.acc.pitch.disp(id), 'double'); 
+end
+fclose(data_dump);
 
 % %----------------------------------------------------
 
-% data_dump = fopen('quad_data_raw_yaw_tf','wb');
-% data_pts = length(ddump.mag.yaw.lrn);
-% fwrite(data_dump, data_pts, 'int');
-% for id = 1:length(ddump.mag.yaw.lrn)
-%    fwrite(data_dump, ddump.mag.bfield(id), 'double'); 
-% end
-% 
-% data_pts = length(ddump.mag.yaw.lrn);
-% fwrite(data_dump, data_pts, 'int');
-% for id = 1:length(ddump.mag.yaw.lrn)
-%    fwrite(data_dump, ddump.mag.yaw.lrn(id), 'double'); 
-% end
-% fclose(data_dump);
+data_dump = fopen('quad_data_raw_yaw_tf.dat','wb');
+data_pts = length(ddump.mag.yaw.lrn);
+fwrite(data_dump, data_pts, 'int');
+for id = 1:length(ddump.mag.yaw.lrn)
+   fwrite(data_dump, ddump.mag.bfield(id), 'double'); 
+end
+
+data_pts = length(ddump.mag.yaw.lrn);
+fwrite(data_dump, data_pts, 'int');
+for id = 1:length(ddump.mag.yaw.lrn)
+   fwrite(data_dump, ddump.mag.yaw.lrn(id), 'double'); 
+end
+fclose(data_dump);
 
 % % %-----------------------------------------------------
 
-% data_dump = fopen('quad_data_raw_yaw_eval','wb');
-% data_pts = length(ddump.gt.t2);
-% fwrite(data_dump, data_pts, 'int');
-% for id = 1:length(ddump.gt.t2)
-%    fwrite(data_dump, ddump.gt.yaw2(id), 'double'); 
-% end
-% 
-% data_pts = length(ddump.gt.t2);
-% fwrite(data_dump, data_pts, 'int');
-% for id = 1:length(ddump.gt.t2)
-%    fwrite(data_dump, ddump.mag.yaw.disp(id), 'double'); 
-% end
-% fclose(data_dump);
+data_dump = fopen('quad_data_raw_yaw_eval.dat','wb');
+data_pts = length(ddump.gt.t2);
+fwrite(data_dump, data_pts, 'int');
+for id = 1:length(ddump.gt.t2)
+   fwrite(data_dump, ddump.gt.yaw2(id), 'double'); 
+end
+
+data_pts = length(ddump.gt.t2);
+fwrite(data_dump, data_pts, 'int');
+for id = 1:length(ddump.gt.t2)
+   fwrite(data_dump, ddump.mag.yaw.disp(id), 'double'); 
+end
+fclose(data_dump);
 
 %----------------------------------------------------
 
