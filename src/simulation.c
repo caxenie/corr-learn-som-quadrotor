@@ -60,6 +60,7 @@ outdata* run_simulation(indata *in, simulation *s)
 	}while(shuffle_pops_ids(base_idx, s->n->nsize, pre_post_pair));
 
 	/* shuffle input data */
+	
 	for(int pidx = 0; pidx < s->n->nsize; pidx++)
 		shuffle_input_data(in->data[pidx], in->len);
 
