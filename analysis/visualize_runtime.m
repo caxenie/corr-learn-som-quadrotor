@@ -1,6 +1,8 @@
     % load the data from the file
 function visualize_runtime(filein)
 rdata = load_runtime_data(filein);
+rdata.sim.net.pops(1).Winput = sort(rdata.sim.net.pops(1).Winput);
+rdata.sim.net.pops(2).Winput = sort(rdata.sim.net.pops(2).Winput);
 close all;
 % plot runtime and learning parameters of the network
 figure(1);
@@ -65,7 +67,7 @@ for ppidx = 1:rdata.sim.indata.npop
         fx = exp(-(x - v_pref).^2/(2*rdata.sim.net.pops(ppidx).s(idx)^2));
         plot(1:rdata.sim.indata.popsize, fx, 'LineWidth', 3); hold all;
     end
-    rdata.sim.net.pops(ppidx).Winput = sort(rdata.sim.net.pops(ppidx).Winput); box off;
+    box off;
     ax1_pos = get(hndl, 'Position'); set(hndl, 'XTick', []); set(hndl, 'XColor','w');
     ax2 = axes('Position',ax1_pos,'XAxisLocation','bottom','Color','none','LineWidth', 3);
     set(hndl, 'YTick', []); set(hndl, 'YColor','w');
