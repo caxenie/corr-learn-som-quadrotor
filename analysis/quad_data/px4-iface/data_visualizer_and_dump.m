@@ -101,7 +101,7 @@ ddump.mag.bfield   = normalize_var(fix_singularities(ld.mag.yaw_off + inf_yaw));
 data_dump = fopen('quad_data_raw_roll_tf.dat','wb');
 
 % resampling for decent sim time (subsample)
-SUBSAMPLE_FACTOR = 4;
+SUBSAMPLE_FACTOR = 3;
 data_pts = length(ddump.acc.roll.lrn)/SUBSAMPLE_FACTOR;
 ddump.acc.roll.lrn = ddump.acc.roll.lrn(1:SUBSAMPLE_FACTOR:end);
 ddump.acc.roll.inf = ddump.acc.roll.inf(1:SUBSAMPLE_FACTOR:end);
@@ -125,9 +125,8 @@ ddump.gt.roll1=sort(ddump.gt.roll1);
 ddump.acc.roll.disp = sort(ddump.acc.roll.disp);
 
 % resampling for decent sim time (subsample)
-SUBSAMPLE_FACTOR = 1;
 data_pts = data_pts/SUBSAMPLE_FACTOR;
-ddump.gt.roll1 =  ddump.gt.roll1(1:SUBSAMPLE_FACTOR:end);
+ddump.gt.roll1 = ddump.gt.roll1(1:SUBSAMPLE_FACTOR:end);
 ddump.acc.roll.disp = ddump.acc.roll.disp(1:SUBSAMPLE_FACTOR:end);
 
 fwrite(data_dump, data_pts, 'int');
@@ -147,7 +146,6 @@ data_dump = fopen('quad_data_raw_pitch_tf.dat','wb');
 data_pts = length(ddump.acc.pitch.lrn);
 
 % resampling for decent sim time (subsample)
-SUBSAMPLE_FACTOR = 4;
 data_pts = data_pts/SUBSAMPLE_FACTOR;
 ddump.acc.pitch.inf = ddump.acc.pitch.inf(1:SUBSAMPLE_FACTOR:end);
 ddump.acc.pitch.lrn = ddump.acc.pitch.lrn(1:SUBSAMPLE_FACTOR:end);
@@ -171,7 +169,6 @@ ddump.gt.pitch1 = sort(ddump.gt.pitch1);
 ddump.acc.pitch.disp = sort(ddump.acc.pitch.disp);
 
 % resampling for decent sim time (subsample)
-SUBSAMPLE_FACTOR = 1;
 data_pts = data_pts/SUBSAMPLE_FACTOR;
 ddump.gt.pitch1 = ddump.gt.pitch1(1:SUBSAMPLE_FACTOR:end);
 ddump.acc.pitch.disp = ddump.acc.pitch.disp(1:SUBSAMPLE_FACTOR:end);
@@ -193,7 +190,6 @@ data_dump = fopen('quad_data_raw_yaw_tf.dat','wb');
 data_pts = length(ddump.mag.yaw.lrn);
 
 % resampling for decent sim time (subsample)
-SUBSAMPLE_FACTOR = 4;
 data_pts = data_pts/SUBSAMPLE_FACTOR;
 ddump.mag.bfield = ddump.mag.bfield(1:SUBSAMPLE_FACTOR:end);
 ddump.mag.yaw.lrn = ddump.mag.yaw.lrn(1:SUBSAMPLE_FACTOR:end);
@@ -217,7 +213,6 @@ ddump.gt.yaw2 = sort(ddump.gt.yaw2);
 ddump.mag.yaw.disp = sort(ddump.mag.yaw.disp);
 
 % resampling for decent sim time (subsample)
-SUBSAMPLE_FACTOR = 1;
 data_pts = data_pts/SUBSAMPLE_FACTOR;
 ddump.gt.yaw2 = ddump.gt.yaw2(1:SUBSAMPLE_FACTOR:end);
 ddump.mag.yaw.disp = ddump.mag.yaw.disp(1:SUBSAMPLE_FACTOR:end);
