@@ -22,7 +22,7 @@ roll    = -ld.att.roll;
 pitch   = -ld.att.pitch;
 
 
-% % Tracker
+% Tracker
 % if(isfield(ld,'rb') == 0)
 %     ld_out = ld;
 %     return;
@@ -40,17 +40,10 @@ pitch   = interp1(t,  pitch,    ld.imu.hrt.t);
 % undo roll and pitch transformations
 b_hat = vec_inv_rot_euler_rp_rad(-roll,-pitch, ld.mag.b);
 
-ld.mag.b_hat = b_hat;
-
 bx = b_hat(1,:);
 by = b_hat(2,:);
 
 ld.mag.yaw      = atan2(by, bx);
-
-% data for learning 
-mf = 0.01;
-ld.mag.yaw_lrn  = fix_singularities(atan(mf*sort(by./ bx)));
-
 ld.mag.yaw_off  = mean(ld.mag.yaw(1:100));
 
 

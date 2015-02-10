@@ -12,7 +12,7 @@
 #define ETA   		1.0f
 #define XI    		0.001f
 #define WRAP_POP 	0
-#define ASYMM_FUNC 	0
+#define ASYMM_FUNC 	1
 
 /* optimizer utils */
 #define SIGN(a,b)       ((b) >= 0.0 ? fabs(a) : -fabs(a))
@@ -46,7 +46,7 @@ enum{
 };
 
 #define DECODER 	OPTIMIZER // {NAIVE, OPTIMIZER}
-#define LEARNING_RULE 	COVARIANCE // {COVARIANCE, HEBB}
+#define LEARNING_RULE 	COVARIANCE      // {COVARIANCE, HEBB}
 
 /* simulation parameters */
 typedef struct{

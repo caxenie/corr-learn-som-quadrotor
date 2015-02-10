@@ -38,14 +38,12 @@ ay = ld.acc.a_rot_f(2,:);
 % az = ld.acc.a_rot_f(3,:);
 az = -ld.g;
 
-% calculate roll an pitch angles
-ld.acc.rot.roll = -atan(ay./ -az);
-ld.acc.rot.pitch = atan(ax./ -az);
 
-% calculate roll an pitch angles and add magnification factor for learning
-magnification_factor = 50;
-ld.acc.rot.roll_lrn = fix_singularities(-atan(magnification_factor*sort(ay./ -az)));
-ld.acc.rot.pitch_lrn = fix_singularities(atan(magnification_factor*sort(ax./ -az)));
+% calculate roll an pitch angles
+ld.acc.rot.roll = -atan2(ay, -az);
+ld.acc.rot.pitch = atan2(ax, -az);
+
+
 
 ld_out = ld;
 

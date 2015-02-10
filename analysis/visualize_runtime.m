@@ -3,7 +3,6 @@ function visualize_runtime(filein)
 rdata = load_runtime_data(filein);
 rdata.sim.net.pops(1).Winput = sort(rdata.sim.net.pops(1).Winput);
 rdata.sim.net.pops(2).Winput = sort(rdata.sim.net.pops(2).Winput);
-close all;
 % plot runtime and learning parameters of the network
 figure(1);
 set(gcf, 'color', 'white');
@@ -26,11 +25,13 @@ for pidx = 1:rdata.sim.net.nsize
     figure;
     set(gcf, 'color', 'white');
     subplot(3, 1, 1);
-    plot(rdata.sim.net.pops(pidx).Winput, sprintf('.%s',idcolor(pidx))); xlabel('cross learning epochs');
+    plot(sort(rdata.sim.net.pops(pidx).Winput), sprintf('.%s',idcolor(pidx))); xlabel('cross learning epochs');
     ylabel(sprintf('Winput - pop %d', pidx));
     grid off; box off; title(sprintf('Input weight vector, adapt %d epochs', rdata.sim.tf_lrn_in));
     subplot(3, 1, 2);
-    imagesc((rdata.sim.net.pops(pidx).Wcross), [0, 1]); box off; colorbar;
+    imagesc((rdata.sim.net.pops(pidx).Wcross'), [0, 1]); box off; colorbar;
+    ymarks=1:100; [~, xmarks]=max((rdata.sim.net.pops(pidx).Wcross), [], 2); 
+    hold on; plot(ymarks, xmarks, '*g');
     xlabel('cross learning epochs'); ylabel(sprintf('Wcross - pop %d', pidx));
     grid off; box off; title(sprintf('Cross weight vector, adapt %d epochs', rdata.sim.tf_lrn_cross));
     subplot(3, 1, 3);
@@ -71,7 +72,7 @@ for ppidx = 1:rdata.sim.indata.npop
     ax1_pos = get(hndl, 'Position'); set(hndl, 'XTick', []); set(hndl, 'XColor','w');
     ax2 = axes('Position',ax1_pos,'XAxisLocation','bottom','Color','none','LineWidth', 3);
     set(hndl, 'YTick', []); set(hndl, 'YColor','w');
-    set(ax2, 'XTick', rdata.sim.net.pops(ppidx).Winput); set(ax2, 'XTickLabel', []);
+    set(ax2, 'XTick', sort(rdata.sim.net.pops(ppidx).Winput)); set(ax2, 'XTickLabel', []);
     set(ax2, 'XLim', [ min(rdata.sim.net.pops(ppidx).Winput), max(rdata.sim.net.pops(ppidx).Winput)]);
     xlabel('neuron preferred values'); ylabel('learned tuning curves shapes');
     % the density of the tuning curves (density function) - should increase

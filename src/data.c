@@ -6,7 +6,7 @@ indata* read_input_data(int np, int psz, FILE* f)
 	int data_pts = 0;	
 	indata *id = (indata*)calloc(1, sizeof(indata));	
 	double *rel_var;
-	double *base_var; 	
+	double *base_var;
 
 	/* get the number of data points */
 	fread(&data_pts, sizeof(int), 1, f);	

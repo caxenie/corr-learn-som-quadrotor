@@ -9,7 +9,6 @@ int main(int argc, char* argv[])
 	outdata *runtime = run_simulation(idata, sim);
 	char *dump_file = dump_runtime_data_extended(runtime, BASIC);
 	printf("CORR_LEARN_NET: Runtime data dumped on disk in: %s\n", dump_file);
-	/* free allocated resources for next pack */
 	deinit_simulation(sim);
 	free(idata);
 	free(runtime);

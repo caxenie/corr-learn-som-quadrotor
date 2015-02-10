@@ -1,50 +1,65 @@
-1391690069798047 128 #audio: RC signal regained
-1391690069876000 128 #audio: warning: reject SEATBELT
-1391690071809359   0 #audio: warning: reject SEATBELT
-1391690073830785 128 #audio: warning: reject SEATBELT
-1391690075063642 128 [cmd] ARMED by RC
-1391690075177828   0 [cmd] state: arm 2, main 0, nav 1
-1391690075817866 128 #audio: warning: reject SEATBELT
-1391690077849359 128 #audio: warning: reject SEATBELT
-1391690079833260   0 #audio: warning: reject SEATBELT
-1391690081913137 128 #audio: warning: reject SEATBELT
-1391690083882314 128 #audio: warning: reject SEATBELT
-1391690085952576 128 #audio: warning: reject SEATBELT
-1391690086681971 128 #audio: CRITICAL: RC SIGNAL LOST
-1391690086768927 128 #audio: FAILSAFE: ALT HOLD (LAND)
-1391690086948826 128 #audio: CRITICAL: RC SIGNAL LOST
-1391690087028323 128 #audio: FAILSAFE: ALT HOLD (LAND)
-1391690087158466   0 #audio: RC signal regained
-1391690087250022 128 #audio: CRITICAL: RC SIGNAL LOST
-1391690087369918 128 #audio: FAILSAFE: ALT HOLD (LAND)
-1391690087453579 128 #audio: RC signal regained
-1391690087573141 128 #audio: CRITICAL: RC SIGNAL LOST
-1391690087620491 128 #audio: FAILSAFE: ALT HOLD (LAND)
-1391690087766247 128 [cmd] state: arm 2, main 0, nav 2
-1391690087936221 128 #audio: RC signal regained
-1391690088026454 128 [cmd] state: arm 2, main 0, nav 1
-1391690088121360 128 #audio: FAILSAFE: ALT HOLD (LAND)
-1391690088255236 128 [cmd] state: arm 2, main 0, nav 2
-1391690088381742 128 #audio: RC signal regained
-1391690088458987 128 [cmd] state: arm 2, main 0, nav 1
-1391690088602948 128 #audio: warning: reject SEATBELT
-1391690088724961 128 #audio: CRITICAL: RC SIGNAL LOST
-1391690088793342 128 #audio: FAILSAFE: ALT HOLD (LAND)
-1391690088870081 128 [cmd] state: arm 2, main 0, nav 2
-1391690089042749 128 #audio: RC signal regained
-1391690089119089  61 [cmd] state: arm 2, main 0, nav 1
-1391690089950872 128 #audio: warning: reject SEATBELT
-1391690091969186 128 #audio: warning: reject SEATBELT
-1391690094006970 128 #audio: warning: reject SEATBELT
-1391690096000041 128 #audio: warning: reject SEATBELT
-1391690098068525 128 #audio: warning: reject SEATBELT
-1391690100098522 128 #audio: warning: reject SEATBELT
-1391690102022553 128 #audio: warning: reject SEATBELT
-1391690103799573   0 #audio: CRITICAL: RC SIGNAL LOST
-1391690104002666   0 [cmd] state: arm 2, main 0, nav 2
-1391690104133078 128 #audio: RC signal regained
-1391690104221925 128 [cmd] state: arm 2, main 0, nav 1
-1391690104364520 128 #audio: warning: reject SEATBELT
-1391690104463501  16 #audio: CRITICAL: RC SIGNAL LOST
-1391690104600239 128 #audio: FAILSAFE: ALT HOLD (LAND)
-1391690104718833 128 [cmd] state: arm 2, main 0, nav 2
+1391689827857924 128 #audio: detected RC signal first time
+1391689827959112 128 #audio: warning: reject SEATBELT
+1391689829864155 128 #audio: warning: reject SEATBELT
+1391689831922521 128 #audio: warning: reject SEATBELT
+1391689833928264 128 #audio: warning: reject SEATBELT
+1391689835926811 128 #audio: warning: reject SEATBELT
+1391689837909030 128 #audio: warning: reject SEATBELT
+1391689839939365 128 #audio: warning: reject SEATBELT
+1391689841969703 128 #audio: warning: reject SEATBELT
+1391689843964610 128 #audio: warning: reject SEATBELT
+1391689846004299   0 #audio: warning: reject SEATBELT
+1391689848038574 128 #audio: warning: reject SEATBELT
+1391689850069934 128 #audio: warning: reject SEATBELT
+1391689852068127   0 #audio: warning: reject SEATBELT
+1391689854039379 128 #audio: warning: reject SEATBELT
+1391689856077584   0 #audio: warning: reject SEATBELT
+1391689858077975 128 #audio: warning: reject SEATBELT
+1391689860060617 128 #audio: warning: reject SEATBELT
+1391689862075201   0 #audio: warning: reject SEATBELT
+1391689863080906   0 [cmd] ARMED by RC
+1391689863202376   0 [cmd] state: arm 2, main 0, nav 1
+1391689864116926 128 #audio: warning: reject SEATBELT
+1391689866171364 128 #audio: warning: reject SEATBELT
+1391689868224865   0 #audio: warning: reject SEATBELT
+1391689870233736 128 #audio: warning: reject SEATBELT
+1391689872272083 128 #audio: warning: reject SEATBELT
+1391689874282172 128 #audio: warning: reject SEATBELT
+1391689876293712 128 #audio: warning: reject SEATBELT
+1391689878249213 128 #audio: warning: reject SEATBELT
+1391689880265806 128 #audio: warning: reject SEATBELT
+1391689882384318 128 #audio: warning: reject SEATBELT
+1391689884422980 128 #audio: warning: reject SEATBELT
+1391689886382909 128 #audio: warning: reject SEATBELT
+1391689888418946 128 #audio: warning: reject SEATBELT
+1391689890448099 128 #audio: warning: reject SEATBELT
+1391689892484491 128 #audio: warning: reject SEATBELT
+1391689894415502 128 #audio: warning: reject SEATBELT
+1391689896517431  83 #audio: warning: reject SEATBELT
+1391689898399157   0 #audio: warning: reject SEATBELT
+1391689900437752 128 #audio: warning: reject SEATBELT
+1391689902442815 128 #audio: warning: reject SEATBELT
+1391689904469977 128 #audio: warning: reject SEATBELT
+1391689906533219 128 #audio: warning: reject SEATBELT
+1391689908563130 128 #audio: warning: reject SEATBELT
+1391689910649562 128 #audio: warning: reject SEATBELT
+1391689912600547 128 #audio: warning: reject SEATBELT
+1391689914608674 128 #audio: warning: reject SEATBELT
+1391689916697115 128 #audio: warning: reject SEATBELT
+1391689918629234 128 #audio: warning: reject SEATBELT
+1391689920664986 128 #audio: warning: reject SEATBELT
+1391689922734507 128 #audio: warning: reject SEATBELT
+1391689924787443   0 #audio: warning: reject SEATBELT
+1391689926697261 128 #audio: warning: reject SEATBELT
+1391689928804946 128 #audio: warning: reject SEATBELT
+1391689930789814 128 #audio: warning: reject SEATBELT
+1391689932824856 128 #audio: warning: reject SEATBELT
+1391689934788238 128 #audio: warning: reject SEATBELT
+1391689936820605 128 #audio: warning: reject SEATBELT
+1391689940871584   0 #audio: warning: reject SEATBELT
+1391689942896323 128 #audio: warning: reject SEATBELT
+1391689943026531 128 [cmd] DISARMED by RC
+1391689943124553   0 [cmd] state: arm 1, main 0, nav 1
+1391689944971407 128 #audio: warning: reject SEATBELT
+1391689946989629 128 #audio: warning: reject SEATBELT
+1391689949024801 128 #audio: warning: reject SEATBELT

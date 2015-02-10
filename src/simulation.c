@@ -59,8 +59,7 @@ outdata* run_simulation(indata *in, simulation *s)
 		sol_idx ++;
 	}while(shuffle_pops_ids(base_idx, s->n->nsize, pre_post_pair));
 
-	/* shuffle input data */
-	
+	/* shuffle input data */	
 	for(int pidx = 0; pidx < s->n->nsize; pidx++)
 		shuffle_input_data(in->data[pidx], in->len);
 
@@ -382,6 +381,8 @@ char* dump_runtime_data(outdata *od)
         }
         fwrite(od, sizeof(outdata), 1, fout);
         fclose(fout);
+	free(tinfo);
+	free(nfout);
         return nfout;
 }
 
@@ -454,6 +455,9 @@ char* dump_runtime_data_extended(outdata *od, int format)
 		}
 	}
         fclose(fout);
-        return nfout;
+        free(tinfo);
+	free(nfout);
+	
+	return nfout;
 }
 

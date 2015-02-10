@@ -1,3 +1,4 @@
+
 #include "simulation.h"
 
 /* initialize a neural population */
@@ -10,7 +11,7 @@ population init_population(short idx, int psize)
 	p.id = idx;
 	p.size = psize;	
 
-	p.Winput = (double*)malloc(p.size*sizeof(population));
+	p.Winput = (double*)calloc(p.size, sizeof(population));
 	p.Wcross = (double**)calloc(p.size, sizeof(population*));
 	for(int i = 0; i<p.size; i++)
 		p.Wcross[i] = (double*)calloc(p.size, sizeof(population));

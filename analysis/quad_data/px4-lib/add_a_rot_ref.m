@@ -12,24 +12,24 @@ end
 %**************************************************************************
 
 % EKF
-% if(isfield(ld,'att') == 0)
-%     ld_out = ld;
-%     return;
-% end
-% t       = ld.att.hrt.t;
-% roll    = -ld.att.roll;
-% pitch   = -ld.att.pitch;
-% yaw     = ld.att.yaw - ld.yaw_off;
-
-% Tracker
-if(isfield(ld,'rb') == 0)
+if(isfield(ld,'att') == 0)
     ld_out = ld;
     return;
 end
-t       = ld.rb.hrt.t;
-roll    = ld.rb.roll;
-pitch   = -ld.rb.pitch;
-yaw     = -ld.rb.yaw;
+t       = ld.att.hrt.t;
+roll    = -ld.att.roll;
+pitch   = -ld.att.pitch;
+yaw     = ld.att.yaw - ld.yaw_off;
+
+% Tracker
+% if(isfield(ld,'rb') == 0)
+%     ld_out = ld;
+%     return;
+% end
+% t       = ld.rb.hrt.t;
+% roll    = ld.rb.roll;
+% pitch   = -ld.rb.pitch;
+% yaw     = -ld.rb.yaw;
 
 
 % interpolate data to imu hrt timeline
