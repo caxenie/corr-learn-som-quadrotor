@@ -455,8 +455,6 @@ char* dump_runtime_data_extended(outdata *od, int format)
 		}
 	}
         fclose(fout);
-        free(tinfo);
-	free(nfout);
 	
 	return nfout;
 }

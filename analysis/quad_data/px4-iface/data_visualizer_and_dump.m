@@ -158,18 +158,20 @@ title('Yaw angle: Mag VS. Ground truth, Mag VS. Gyro');
 % % DUMP FILE ON DISK
 
 %normalize data before dumping to disk 
-ddump.gt.roll = normalize_var(ddump.gt.roll);
-ddump.gt.pitch = normalize_var(ddump.gt.pitch);
-ddump.gt.yaw = normalize_var(ddump.gt.yaw);
-ddump.acc.roll.disp = normalize_var(ddump.acc.roll.disp);
-ddump.acc.roll.lrn =normalize_var(ddump.acc.roll.lrn);
-ddump.acc.roll.inf = normalize_var(ddump.acc.roll.inf);
-ddump.acc.pitch.disp = normalize_var(ddump.acc.pitch.disp);
-ddump.acc.pitch.lrn =normalize_var(ddump.acc.pitch.lrn);
-ddump.acc.pitch.inf = normalize_var(ddump.acc.pitch.inf);
-ddump.mag.yaw.disp = normalize_var(ddump.mag.yaw.disp);
-ddump.mag.yaw.lrn  = normalize_var(ddump.mag.yaw.lrn);
-ddump.mag.yaw.inf   = normalize_var(ddump.mag.yaw.inf);
+subsampling_factor = 10; % simulation time reduction
+ddump.gt.t = 1:length(ddump.gt.t)/subsampling_factor;
+ddump.gt.roll = normalize_var(ddump.gt.roll(1:subsampling_factor:end));
+ddump.gt.pitch = normalize_var(ddump.gt.pitch(1:subsampling_factor:end));
+ddump.gt.yaw = normalize_var(ddump.gt.yaw(1:subsampling_factor:end));
+ddump.acc.roll.disp = normalize_var(ddump.acc.roll.disp(1:subsampling_factor:end));
+ddump.acc.roll.lrn =normalize_var(ddump.acc.roll.lrn(1:subsampling_factor:end));
+ddump.acc.roll.inf = normalize_var(ddump.acc.roll.inf(1:subsampling_factor:end));
+ddump.acc.pitch.disp = normalize_var(ddump.acc.pitch.disp(1:subsampling_factor:end));
+ddump.acc.pitch.lrn =normalize_var(ddump.acc.pitch.lrn(1:subsampling_factor:end));
+ddump.acc.pitch.inf = normalize_var(ddump.acc.pitch.inf(1:subsampling_factor:end));
+ddump.mag.yaw.disp = normalize_var(ddump.mag.yaw.disp(1:subsampling_factor:end));
+ddump.mag.yaw.lrn  = normalize_var(ddump.mag.yaw.lrn(1:subsampling_factor:end));
+ddump.mag.yaw.inf   = normalize_var(ddump.mag.yaw.inf(1:subsampling_factor:end));
 
 data_dump = fopen('quad_data_raw_roll_tf.dat','wb');
 
