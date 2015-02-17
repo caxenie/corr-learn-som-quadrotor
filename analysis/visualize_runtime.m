@@ -29,9 +29,9 @@ for pidx = 1:rdata.sim.net.nsize
     ylabel(sprintf('Winput - pop %d', pidx));
     grid off; box off; title(sprintf('Input weight vector, adapt %d epochs', rdata.sim.tf_lrn_in));
     subplot(3, 1, 2);
-    imagesc((rdata.sim.net.pops(pidx).Wcross), [0, 1]); box off; colorbar;
-    ymarks=1:100; [~, xmarks]=max((rdata.sim.net.pops(pidx).Wcross), [], 2); 
-    hold on; plot(ymarks, xmarks, '*g');
+    imagesc(rot90(rdata.sim.net.pops(pidx).Wcross), [0, 1]); box off; colorbar;
+    ymarks=1:100; [~, xmarks]=max(rot90(rdata.sim.net.pops(pidx).Wcross), [], 2); 
+    hold on; plot(ymarks, xmarks, 'g', 'LineWidth', 4);
     xlabel('cross learning epochs'); ylabel(sprintf('Wcross - pop %d', pidx));
     grid off; box off; title(sprintf('Cross weight vector, adapt %d epochs', rdata.sim.tf_lrn_cross));
     subplot(3, 1, 3);
@@ -44,7 +44,7 @@ end
 RANGE = 1;
 for vpidx =2:rdata.sim.net.nsize
     figure; set(gcf, 'color', 'white');
-    plot(sort(rdata.sim.indata.data(1, :)), sort(rdata.sim.indata.data(vpidx, :)), '.k'); xlabel('samples');
+    plot(sort(rdata.sim.indata.data(1, :)), sort(rdata.sim.indata.data(vpidx, :)), 'k','LineWidth',3); xlabel('samples');
     grid off; box off; title(sprintf('Input relation population 1 - population %d', vpidx));
 end
 % individual map analysis
