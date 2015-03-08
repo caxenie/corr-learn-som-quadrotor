@@ -1,8 +1,6 @@
     % load the data from the file
 function visualize_runtime(filein)
 rdata = load_runtime_data(filein);
-rdata.sim.net.pops(1).Winput = sort(rdata.sim.net.pops(1).Winput);
-rdata.sim.net.pops(2).Winput = sort(rdata.sim.net.pops(2).Winput);
 % plot runtime and learning parameters of the network
 figure(1);
 set(gcf, 'color', 'white');
@@ -82,4 +80,42 @@ for ppidx = 1:rdata.sim.indata.npop
     hist(rdata.sim.net.pops(ppidx).Winput, 50); box off;ylabel('# of allocated neurons for a value');
     xlabel('input value range');
 end
+
+% DISPLAY TUNING CURVES FOR ONLY SOME NEURONS
+% individual map analysis
+for ppidx = 1:rdata.sim.indata.npop
+figure;
+hndl = subplot(1,1,1);
+v_pref = sort(rdata.sim.net.pops(ppidx).Winput);
+% for each neuron in the current population compute the receptive field
+% select some tuning curves to plot
+pref = [1, 6, 13, 40, 45, 85, 90, 99];
+for idx = 1:length(pref)
+    idx_pref = pref(idx);
+    % extract the preferred values (weight vector) of each neuron
+    fx = exp(-(x - v_pref(idx_pref)).^2/(2*rdata.sim.net.pops(ppidx).s(idx_pref)^2));
+    plot(1:rdata.sim.indata.popsize, fx,'LineWidth', 3); hold all;
+end
+ax1_pos = get(hndl, 'Position'); set(hndl, 'XTick', []); set(hndl, 'XColor','w');
+ax2 = axes('Position',ax1_pos,'XAxisLocation','bottom','Color','none','LineWidth', 3);
+set(hndl, 'YTick', []); set(hndl, 'YColor','w');
+v_pref_idx = zeros(1, length(pref));
+for idx = 1:length(pref)
+    v_pref_idx(idx) = v_pref(pref(idx)+1);
+end
+set(ax2, 'XTick', v_pref_idx); set(ax2, 'XTickLabel', v_pref_idx);
+set(ax2, 'XLim', [min(x), max(x)]);
+set(ax2, 'XTickLabelRotation', 90);
+xlabel(ax2, 'preferred value');
+ylabel('learned tuning curves shapes');
+ax3 = axes('Position',ax2.Position,...
+    'XAxisLocation','top',...
+    'Color','none','LineWidth', 0.01);
+set(ax3, 'XTick', v_pref_idx); 
+set(ax3, 'Ticklength', [0 0]); 
+set(ax3, 'XTickLabel', pref);
+set(ax3, 'XLim', [min(x), max(x)]);
+xlabel(ax3, 'neuron index');
+end
+
 end

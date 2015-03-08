@@ -12,7 +12,6 @@
 #define ETA   		1.0f
 #define XI    		0.001f
 #define WRAP_POP 	0
-#define ASYMM_FUNC 	1
 
 /* optimizer utils */
 #define SIGN(a,b)       ((b) >= 0.0 ? fabs(a) : -fabs(a))
