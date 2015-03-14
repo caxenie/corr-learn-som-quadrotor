@@ -8,7 +8,7 @@ simulation* init_simulation(int nepochs, network*net)
 
 	s->max_epochs = nepochs;
 	s->t0 = 0;
-	s->tf_lrn_in = s->max_epochs/8;
+	s->tf_lrn_in = 50; //s->max_epochs/8;
 	s->tf_lrn_cross = s->max_epochs;
 	
 	s->alpha = (double*)calloc(s->tf_lrn_in, sizeof(double));

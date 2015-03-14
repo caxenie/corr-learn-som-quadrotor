@@ -3,11 +3,11 @@
 #include <stddef.h>
 
 /* simulation constant parameters */
-#define MAX_EPOCHS      400
+#define MAX_EPOCHS      7
 #define N_POP           2
 #define POP_SIZE        100
 #define ALPHAI 		0.1f
-#define ALPHAF 		0.001f
+#define ALPHAF 		0.08f
 #define SIGMAF 		1.0f
 #define ETA   		1.0f
 #define XI    		0.001f

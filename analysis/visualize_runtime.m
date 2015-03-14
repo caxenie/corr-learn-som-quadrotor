@@ -1,5 +1,6 @@
     % load the data from the file
 function visualize_runtime(filein)
+close all;
 rdata = load_runtime_data(filein);
 % plot runtime and learning parameters of the network
 figure(1);
@@ -27,9 +28,10 @@ for pidx = 1:rdata.sim.net.nsize
     ylabel(sprintf('Winput - pop %d', pidx));
     grid off; box off; title(sprintf('Input weight vector, adapt %d epochs', rdata.sim.tf_lrn_in));
     subplot(3, 1, 2);
-    imagesc(rot90(rdata.sim.net.pops(pidx).Wcross), [0, 1]); box off; colorbar;
-    ymarks=1:100; [~, xmarks]=max(rot90(rdata.sim.net.pops(pidx).Wcross), [], 2); 
-    hold on; plot(ymarks, xmarks, 'g', 'LineWidth', 4);
+    %rdata.sim.net.pops(pidx).Wcross(rdata.sim.net.pops(pidx).Wcross(:)>0.0)=1;
+    imagesc(((rdata.sim.net.pops(pidx).Wcross)), [0, 1]); box off; colorbar;
+    % ymarks=1:100; [~, xmarks]=max((rdata.sim.net.pops(pidx).Wcross), [], 2); 
+    % hold on; plot(ymarks, xmarks, 'g', 'LineWidth', 4);
     xlabel('cross learning epochs'); ylabel(sprintf('Wcross - pop %d', pidx));
     grid off; box off; title(sprintf('Cross weight vector, adapt %d epochs', rdata.sim.tf_lrn_cross));
     subplot(3, 1, 3);
