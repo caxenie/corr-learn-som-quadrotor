@@ -204,9 +204,10 @@ switch(dataplot)
         plot(ddump.gt.t, ddump.acc.roll.disp,'.r'); hold on;
         plot(ddump.gt.t, ddump.acc.roll.lrn,'.g');grid on; box off;
         rmse_roll_gyro_gt = sqrt(sum((ddump.gt.roll(:)-ddump.acc.roll.lrn(:)).^2)/numel(ddump.gt.roll));
-        title('Roll angle'); legend('Ground truth', 'Acc', sprintf('Gyro(RMSE: %f)', rmse_roll_gyro_gt));
+        rmse_roll_acc_gt = sqrt(sum((ddump.gt.roll(:)-ddump.acc.roll.disp(:)).^2)/numel(ddump.gt.roll));
+        legend('Ground truth', sprintf('Acc(RMSE: %f)', rmse_roll_acc_gt), sprintf('Gyro(RMSE: %f)', rmse_roll_gyro_gt));
         set(gca, 'LooseInset', get(gca, 'TightInset') ,'FontWeight','Bold','LineWidth',2);
-        set(gcf, 'PaperPositionMode', 'auto');xlabel('time (s)');
+        set(gcf, 'PaperPositionMode', 'auto');ylabel('angle (rad/s)');xlabel('time (s)');
         set(gcf,'PaperUnits','inches','PaperPosition',[0 0 10 5]);
         if(printplot==1), print -dpng rollall.png; end
         
@@ -268,9 +269,10 @@ switch(dataplot)
         plot(ddump.gt.t, ddump.acc.pitch.disp,'.r'); hold on;
         plot(ddump.gt.t, ddump.acc.pitch.lrn,'.g'); grid on; box off;
         rmse_pitch_gyro_gt = sqrt(sum((ddump.gt.pitch(:)-ddump.acc.pitch.lrn(:)).^2)/numel(ddump.gt.pitch));
-        title('Pitch angle'); legend('Ground truth', 'Acc', sprintf('Gyro(RMSE: %f)', rmse_pitch_gyro_gt));
+        rmse_pitch_acc_gt = sqrt(sum((ddump.gt.roll(:)-ddump.acc.pitch.disp(:)).^2)/numel(ddump.gt.roll));
+        legend('Ground truth', sprintf('Acc(RMSE: %f)', rmse_pitch_acc_gt), sprintf('Gyro(RMSE: %f)', rmse_pitch_gyro_gt));        
         set(gca, 'LooseInset', get(gca, 'TightInset') ,'FontWeight','Bold','LineWidth',2);
-        set(gcf, 'PaperPositionMode', 'auto');xlabel('time (s)');
+        set(gcf, 'PaperPositionMode', 'auto');ylabel('angle (rad/s)');xlabel('time (s)');
         set(gcf,'PaperUnits','inches','PaperPosition',[0 0 10 5]);
         if(printplot==1), print -dpng pitchall.png; end
         
@@ -333,9 +335,10 @@ switch(dataplot)
         plot(ddump.gt.t, ddump.mag.yaw.disp,'.m'); hold on;
         plot(ddump.gt.t, ddump.mag.yaw.lrn,'.g'); grid on; box off;
         rmse_yaw_gyro_gt = sqrt(sum((ddump.gt.yaw(:)-ddump.mag.yaw.lrn(:)).^2)/numel(ddump.gt.yaw));
-        title('Yaw angle'); legend('Ground truth', 'Mag', sprintf('Gyro(RMSE: %f)', rmse_yaw_gyro_gt));
+        rmse_yaw_mag_gt = sqrt(sum((ddump.gt.roll(:)-ddump.mag.yaw.disp(:)).^2)/numel(ddump.gt.roll));
+        legend('Ground truth', sprintf('Mag(RMSE: %f)', rmse_yaw_mag_gt), sprintf('Gyro(RMSE: %f)', rmse_yaw_gyro_gt));
         set(gca, 'LooseInset', get(gca, 'TightInset') ,'FontWeight','Bold','LineWidth',2);
-        set(gcf, 'PaperPositionMode', 'auto');
+        set(gcf, 'PaperPositionMode', 'auto');ylabel('angle (rad/s)');xlabel('time (s)');
         set(gcf,'PaperUnits','inches','PaperPosition',[0 0 10 5]);
         if(printplot==1), print -dpng yawall.png; end
         
