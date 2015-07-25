@@ -2,25 +2,26 @@
 function visualize_runtime(filein)
 close all;
 rdata = load_runtime_data(filein);
-% plot runtime and learning parameters of the network
-figure(1);
-set(gcf, 'color', 'white');
-subplot(2,2,1);
-plot(rdata.sim.alpha, '.k'); xlabel('in learning epochs'); ylabel('alpha');
-grid off; box off; title(sprintf('Input learning rate, adapt %d epochs', rdata.sim.tf_lrn_in));
-subplot(2,2,2);
-plot(rdata.sim.sigma, '.k'); xlabel('in learning epochs'); ylabel('sigma');
-grid off; box off; title(sprintf('Neighborhood size, adapt %d epochs', rdata.sim.tf_lrn_in));
-subplot(2,2,3);
-plot(rdata.sim.eta, '.k'); xlabel('cross learning epochs'); ylabel('eta');
-grid off; box off; title(sprintf('Activity decay factor, adapt %d epochs', rdata.sim.tf_lrn_cross));
-subplot(2,2,4);
-plot(rdata.sim.xi, '.k'); xlabel('cross learning epochs'); ylabel('xi');
-grid off; box off; title(sprintf('Cross-modal learning rate, adapt %d epochs', rdata.sim.tf_lrn_cross));
+
+% % plot runtime and learning parameters of the network
+% figure(1);
+% set(gcf, 'color', 'white');
+% subplot(2,2,1);
+% plot(rdata.sim.alpha, '.k'); xlabel('in learning epochs'); ylabel('alpha');
+% grid off; box off; title(sprintf('Input learning rate, adapt %d epochs', rdata.sim.tf_lrn_in));
+% subplot(2,2,2);
+% plot(rdata.sim.sigma, '.k'); xlabel('in learning epochs'); ylabel('sigma');
+% grid off; box off; title(sprintf('Neighborhood size, adapt %d epochs', rdata.sim.tf_lrn_in));
+% subplot(2,2,3);
+% plot(rdata.sim.eta, '.k'); xlabel('cross learning epochs'); ylabel('eta');
+% grid off; box off; title(sprintf('Activity decay factor, adapt %d epochs', rdata.sim.tf_lrn_cross));
+% subplot(2,2,4);
+% plot(rdata.sim.xi, '.k'); xlabel('cross learning epochs'); ylabel('xi');
+% grid off; box off; title(sprintf('Cross-modal learning rate, adapt %d epochs', rdata.sim.tf_lrn_cross));
 
 % plot runtime and learning parameters of the network
 idcolor = 'rbgmyk';
-for pidx = 1:rdata.sim.net.nsize
+for pidx = 1:1%rdata.sim.net.nsize
     figure;
     set(gcf, 'color', 'white');
     subplot(3, 1, 1);
@@ -48,7 +49,7 @@ for vpidx =2:rdata.sim.net.nsize
     grid off; box off; title(sprintf('Input relation population 1 - population %d', vpidx));
 end
 % individual map analysis
-for ppidx = 1:rdata.sim.indata.npop
+for ppidx = 1:1%rdata.sim.indata.npop
     figure;
     set(gcf, 'color', 'white');
     subplot(4, 1, 1);
@@ -85,7 +86,7 @@ end
 
 % DISPLAY TUNING CURVES FOR ONLY SOME NEURONS
 % individual map analysis
-for ppidx = 1:rdata.sim.indata.npop
+for ppidx = 1:1%rdata.sim.indata.npop
 figure;
 hndl = subplot(1,1,1);
 v_pref = sort(rdata.sim.net.pops(ppidx).Winput);

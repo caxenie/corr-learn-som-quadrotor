@@ -63,10 +63,12 @@ GYRO.pitch      = zeros(1,n);
 GYRO.yaw        = zeros(1,n);
 
 % numerically integrate angular velocities
+% supersampling factor
+supsampfact = 1;
 for k=2:n
-    GYRO.roll(k)     = GYRO.roll(k-1)   + (ld.imu.xgyro(k-1)-gyroOff(1)) * ld.imu.hrt.dt(k)/1;
-    GYRO.pitch(k)    = GYRO.pitch(k-1)  + (ld.imu.ygyro(k-1)-gyroOff(2)) * ld.imu.hrt.dt(k)/1;
-    GYRO.yaw(k)      = GYRO.yaw(k-1)    + (ld.imu.zgyro(k-1)-gyroOff(3)) * ld.imu.hrt.dt(k)/1;
+    GYRO.roll(k)     = GYRO.roll(k-1)   + (ld.imu.xgyro(k-1)-gyroOff(1)) * ld.imu.hrt.dt(k)/supsampfact;
+    GYRO.pitch(k)    = GYRO.pitch(k-1)  + (ld.imu.ygyro(k-1)-gyroOff(2)) * ld.imu.hrt.dt(k)/supsampfact;
+    GYRO.yaw(k)      = GYRO.yaw(k-1)    + (ld.imu.zgyro(k-1)-gyroOff(3)) * ld.imu.hrt.dt(k)/supsampfact;
 end
 
 EKF.rollOff     = mean(ld.att.roll(intOff));
@@ -206,7 +208,6 @@ data.int        = int;
 fprintf('DONE \n');
 
 save('PX4DataNew.mat','data');
-
 
 rmpath(libPath);
 rmpath(logPath);
